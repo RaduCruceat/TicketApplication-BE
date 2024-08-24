@@ -9,6 +9,8 @@ using TicketApplication.Migrations;
 using TicketApplication.Data.Context;
 using TicketApplication.Data.Repositories;
 using TicketApplication.Services;
+using TicketApplication.Validators.GhiseuValidators;
+using TicketApplication.Validators.BonValidators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,14 +51,15 @@ builder.Services.AddDbContext<BonContext>(options =>
     options.UseSqlServer(connectionString));
 
 // Register validators
-//builder.Services.AddScoped<GhiseuIdValidator>();
-//builder.Services.AddScoped<CreateGhiseuValidator>();
-//builder.Services.AddScoped<UpdateGhiseuValidator>();
-//builder.Services.AddScoped<DeleteGhiseuValidator>();
-//builder.Services.AddScoped<BonIdValidator>();
-//builder.Services.AddScoped<CreateBonValidator>();
-//builder.Services.AddScoped<UpdateBonValidator>();
-//builder.Services.AddScoped<DeleteBonValidator>();
+builder.Services.AddScoped<GhiseuIdValidator>();
+builder.Services.AddScoped<CreateGhiseuValidator>();
+builder.Services.AddScoped<ActiveGhiseuValidator>();
+builder.Services.AddScoped<DeleteGhiseuValidator>();
+
+builder.Services.AddScoped<BonIdValidator>();
+builder.Services.AddScoped<CreateBonValidator>();
+builder.Services.AddScoped<UpdateBonStatusValidator>();
+
 //
 var app = builder.Build();
 
