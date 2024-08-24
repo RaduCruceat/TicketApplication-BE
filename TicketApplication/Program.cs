@@ -55,6 +55,7 @@ builder.Services.AddScoped<GhiseuIdValidator>();
 builder.Services.AddScoped<CreateGhiseuValidator>();
 builder.Services.AddScoped<ActiveGhiseuValidator>();
 builder.Services.AddScoped<DeleteGhiseuValidator>();
+builder.Services.AddScoped<UpdateGhiseuValidator>();
 
 builder.Services.AddScoped<BonIdValidator>();
 builder.Services.AddScoped<CreateBonValidator>();
