@@ -7,9 +7,9 @@
         public required string Denumire { get; set; }
         public required string Descriere { get; set; }
         public required string Icon { get; set; }
-        public bool Activ { get; set; }
+        public required bool Activ { get; set; }
 
         // Navigation property
-        public ICollection<Bon> Bonuri { get; set; }
+        public ICollection<Bon>? Bonuri { get; set; }
     }
 }

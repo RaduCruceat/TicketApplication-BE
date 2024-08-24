@@ -9,7 +9,7 @@
         public DateTime ModifiedAt { get; set; }
 
         // Navigation property
-        public Ghiseu Ghiseu { get; set; }
+        public required Ghiseu Ghiseu { get; set; }
     }
     public enum StareEnum
     {
