@@ -21,7 +21,7 @@ public class GhiseuController : ControllerBase
     {
         try
         {
-            var ghiseuList = await _ghiseuService.GetAll();
+            var ghiseuList = await _ghiseuService.GetAllGhiseu();
             return Ok(ghiseuList);
         }
         catch (FluentValidation.ValidationException e)

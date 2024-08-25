@@ -7,8 +7,7 @@ namespace TicketApplication.Validators.BonValidators
     {
         public UpdateBonStatusValidator()
         {
-            RuleFor(dto => dto.Id).SetValidator(new BonIdValidator());
-            RuleFor(dto => dto.Stare).IsInEnum();
+            RuleFor(dto => dto.Stare).IsInEnum().WithMessage("Invalid value for Stare.");
         }
     }
 }

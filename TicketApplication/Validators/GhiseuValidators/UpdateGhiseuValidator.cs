@@ -3,15 +3,16 @@ using TicketApplication.Services.Dtos;
 
 namespace TicketApplication.Validators.GhiseuValidators
 {
-    public class UpdateGhiseuValidator : AbstractValidator<GhiseuDto>
+    public class UpdateGhiseuValidator : AbstractValidator<(int, GhiseuDto)>
     {
         public UpdateGhiseuValidator()
         {
-            RuleFor(g => g.Cod).NotEmpty().MaximumLength(50);
-            RuleFor(g => g.Denumire).NotEmpty().MaximumLength(50);
-            RuleFor(g => g.Descriere).MaximumLength(500);
-            RuleFor(g => g.Icon).MaximumLength(200);
-            RuleFor(g => g.Activ).NotNull();
+            RuleFor(tuple => tuple.Item1).GreaterThan(0);
+            RuleFor(tuple => tuple.Item2.Cod).NotEmpty().MaximumLength(50);
+            RuleFor(tuple => tuple.Item2.Denumire).NotEmpty().MaximumLength(50);
+            RuleFor(tuple => tuple.Item2.Descriere).MaximumLength(500);
+            RuleFor(tuple => tuple.Item2.Icon).MaximumLength(200);
+            RuleFor(tuple => tuple.Item2.Activ).NotNull();
         }
     }
 }

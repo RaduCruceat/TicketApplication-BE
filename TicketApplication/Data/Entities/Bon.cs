@@ -1,4 +1,6 @@
-﻿namespace TicketApplication.Data.Entities
+﻿using TicketApplication.Common;
+
+namespace TicketApplication.Data.Entities
 {
     public class Bon
     {
@@ -9,12 +11,7 @@
         public DateTime ModifiedAt { get; set; }
 
         // Navigation property
-        public required Ghiseu Ghiseu { get; set; }
+        public Ghiseu? Ghiseu { get; set; }
     }
-    public enum StareEnum
-    {
-        InCursDePreluare,
-        Preluat,
-        Inchis
-    }
+    
 }

@@ -43,7 +43,8 @@ namespace TicketApplication.Data.Context
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).UseIdentityColumn();
                 entity.Property(e => e.IdGhiseu);
-                entity.Property(e => e.Stare).HasConversion<string>();
+                entity.Property(e => e.Stare).HasConversion<int>();
+                entity.Property(e => e.Stare);
                 entity.Property(e => e.CreatedAt);
                 entity.Property(e => e.ModifiedAt);
 

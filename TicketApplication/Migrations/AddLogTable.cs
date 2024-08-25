@@ -21,7 +21,7 @@ namespace TicketApplication.Migrations
             Create.Table("Bon").InSchema("bon")
                 .WithColumn("Id").AsInt32().PrimaryKey().Identity().NotNullable()
                 .WithColumn("IdGhiseu").AsInt32().NotNullable()
-                .WithColumn("Stare").AsString().NotNullable()
+                .WithColumn("Stare").AsInt32().NotNullable()
                 .WithColumn("CreatedAt").AsDateTime().NotNullable()
                 .WithColumn("ModifiedAt").AsDateTime().NotNullable();
 

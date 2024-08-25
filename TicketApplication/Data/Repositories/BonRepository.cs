@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using TicketApplication.Data.Entities;
 using Dapper;
+using TicketApplication.Common;
 
 namespace TicketApplication.Data.Repositories
 {
@@ -13,12 +14,30 @@ namespace TicketApplication.Data.Repositories
             this._connectionString = connectionString;
         }
 
+        public async Task<Bon?> GetBonById(int id)
+        {
+            using (var con = new SqlConnection(_connectionString))
+            {
+                string sql = "SELECT * FROM bon.Bon WHERE Id = @Id";
+                return await con.QuerySingleOrDefaultAsync<Bon>(sql, new { Id = id });
+            }
+        }
+
+        public async Task<IEnumerable<Bon>> GetAllBon()
+        {
+            using (var con = new SqlConnection(_connectionString))
+            {
+                string sql = "SELECT * FROM bon.Bon";
+                return await con.QueryAsync<Bon>(sql);
+            }
+        }
+
         public async Task<Bon> AddBon(Bon bon)
         {
             using (var con = new SqlConnection(_connectionString))
             {
                 string sql = @"
-            INSERT INTO Bon (IdGhiseu, Stare, CreatedAt, ModifiedAt)
+            INSERT INTO bon.Bon (IdGhiseu, Stare, CreatedAt, ModifiedAt)
             VALUES (@IdGhiseu, @Stare, @CreatedAt, @ModifiedAt);
             SELECT CAST(SCOPE_IDENTITY() as int)";
 
@@ -32,7 +51,7 @@ namespace TicketApplication.Data.Repositories
             using (var con = new SqlConnection(_connectionString))
             {
                 string sql = @"
-            UPDATE Bon SET 
+            UPDATE bon.Bon SET 
                 Stare = @Stare,
                 ModifiedAt = @ModifiedAt 
             WHERE Id = @Id";
@@ -46,7 +65,7 @@ namespace TicketApplication.Data.Repositories
             using (var con = new SqlConnection(_connectionString))
             {
                 string sql = @"
-            UPDATE Bon SET 
+            UPDATE bon.Bon SET 
                 Stare = @Stare,
                 ModifiedAt = @ModifiedAt 
             WHERE Id = @Id";
@@ -60,7 +79,7 @@ namespace TicketApplication.Data.Repositories
             using (var con = new SqlConnection(_connectionString))
             {
                 string sql = @"
-            UPDATE Bon SET 
+            UPDATE bon.Bon SET 
                 Stare = @Stare,
                 ModifiedAt = @ModifiedAt 
             WHERE Id = @Id";

@@ -14,12 +14,29 @@ namespace TicketApplication.Data.Repositories
             this._connectionString = connectionString;
         }
 
+        public async Task<Ghiseu?> GetGhiseuById(int id)
+        {
+            using (var con = new SqlConnection(_connectionString))
+            {
+                string sql = "SELECT * FROM bon.Ghiseu WHERE Id = @Id";
+                return await con.QuerySingleOrDefaultAsync<Ghiseu>(sql, new { Id = id });
+            }
+        }
+
+        public async Task<IEnumerable<Ghiseu>> GetAllGhiseu()
+        {
+            using (var con = new SqlConnection(_connectionString))
+            {
+                string sql = "SELECT * FROM bon.Ghiseu";
+                return await con.QueryAsync<Ghiseu>(sql);
+            }
+        }
         public async Task<Ghiseu> AddGhiseu(Ghiseu ghiseu)
         {
             using (var con = new SqlConnection(_connectionString))
             {
                 string sql = @"
-            INSERT INTO Ghiseu (Cod, Denumire, Descriere, Icon, Activ)
+            INSERT INTO bon.Ghiseu (Cod, Denumire, Descriere, Icon, Activ)
             VALUES (@Cod, @Denumire, @Descriere, @Icon, @Activ);
             SELECT CAST(SCOPE_IDENTITY() as int)";
 
@@ -33,7 +50,7 @@ namespace TicketApplication.Data.Repositories
             using (var con = new SqlConnection(_connectionString))
             {
                 string sql = @"
-            UPDATE Ghiseu SET 
+            UPDATE bon.Ghiseu SET 
                 Cod = @Cod, 
                 Denumire = @Denumire, 
                 Descriere = @Descriere, 
@@ -52,7 +69,7 @@ namespace TicketApplication.Data.Repositories
         {
             using (var con = new SqlConnection(_connectionString))
             {
-                string sql = "UPDATE Ghiseu SET Activ = 1 WHERE Id = @Id";
+                string sql = "UPDATE bon.Ghiseu SET Activ = 1 WHERE Id = @Id";
                 await con.ExecuteAsync(sql, new { Id = id });
             }
         }
@@ -61,7 +78,7 @@ namespace TicketApplication.Data.Repositories
         {
             using (var con = new SqlConnection(_connectionString))
             {
-                string sql = "UPDATE Ghiseu SET Activ = 0 WHERE Id = @Id";
+                string sql = "UPDATE bon.Ghiseu SET Activ = 0 WHERE Id = @Id";
                 await con.ExecuteAsync(sql, new { Id = id });
             }
         }
@@ -70,7 +87,7 @@ namespace TicketApplication.Data.Repositories
         {
             using (var con = new SqlConnection(_connectionString))
             {
-                string sql = "DELETE FROM Ghiseu WHERE Id = @Id";
+                string sql = "DELETE FROM bon.Ghiseu WHERE Id = @Id";
                 await con.ExecuteAsync(sql, new { Id = id });
             }
         }

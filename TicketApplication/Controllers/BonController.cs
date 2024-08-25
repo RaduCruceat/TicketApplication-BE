@@ -21,7 +21,7 @@ public class BonController : ControllerBase
     {
         try
         {
-            var bonList = await _bonService.GetAll();
+            var bonList = await _bonService.GetAllBon();
             return Ok(bonList);
         }
         catch (FluentValidation.ValidationException e)
@@ -39,7 +39,7 @@ public class BonController : ControllerBase
     {
         try
         {
-            var bon = await _bonService.GetById(id);
+            var bon = await _bonService.GetBonById(id);
             if (bon == null)
             {
                 return NotFound($"Bon with ID {id} not found.");
@@ -65,7 +65,7 @@ public class BonController : ControllerBase
     {
         try
         {
-            var addedBon = await _bonService.Add(bon);
+            var addedBon = await _bonService.AddBon(bon);
             return Ok(addedBon);
         }
         catch (ValidationException e)
@@ -135,7 +135,7 @@ public class BonController : ControllerBase
     {
         try
         {
-            var updatedBon = await _bonService.MarkAsClose(id);
+            var updatedBon = await _bonService.MarkAsClosed(id);
             if (updatedBon == null)
             {
                 return NotFound($"Bon with ID {id} not found.");
