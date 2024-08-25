@@ -57,6 +57,24 @@ public class BonController : ControllerBase
             return StatusCode(500, $"An error occurred: {e.Message}");
         }
     }
+    [HttpGet("GetAll/{ghiseuId}", Name = "GetAllBonsByGhiseuId")]
+    public async Task<ActionResult<IEnumerable<BonDto>>> GetAllBonByGhiseuId(int ghiseuId)
+    {
+        try
+        {
+            var bons = await _bonService.GetAllBonByGhiseuId(ghiseuId);
+            return Ok(bons);
+        }
+        catch (FluentValidation.ValidationException e)
+        {
+            return BadRequest(e.Errors);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, $"An error occurred: {e.Message}");
+        }
+    }
+
 
     [HttpPost("Add", Name = "AddBon")]
     public async Task<ActionResult<BonDto>> AddBon([FromBody] BonDto bon)

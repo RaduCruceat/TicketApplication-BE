@@ -6,6 +6,7 @@ namespace TicketApplication.Services
     {
         Task<BonDto> AddBon(BonDto bonDto);
         Task<BonDto> GetBonById(int bonId);
+        Task<IEnumerable<BonDto>> GetAllBonByGhiseuId(int ghiseuId);
         Task<IEnumerable<BonDto>> GetAllBon();
         Task<BonDto> MarkAsInProgress(int bonId);
         Task<BonDto> MarkAsReceived(int bonId);

@@ -3,6 +3,7 @@ using TicketApplication.Data.Entities;
 using TicketApplication.Data.Repositories;
 using TicketApplication.Services.Dtos;
 using TicketApplication.Validators.BonValidators;
+using TicketApplication.Validators.GhiseuValidators;
 
 namespace TicketApplication.Services
 {
@@ -10,17 +11,19 @@ namespace TicketApplication.Services
     {
         private readonly IBonRepository _bonRepository;
         private readonly IGhiseuRepository _ghiseuRepository;
+        private readonly GhiseuIdValidator _ghiseuIdValidator;
         private readonly BonIdValidator _bonIdValidator;
         private readonly AddBonValidator _addBonValidator;
         private readonly EditBonStatusValidator _editBonStatusValidator;
 
-        public BonService(IGhiseuRepository ghiseuRepository, IBonRepository bonRepository, BonIdValidator bonIdValidator, AddBonValidator addBonValidator, EditBonStatusValidator editBonStatusValidator)
+        public BonService(IGhiseuRepository ghiseuRepository, IBonRepository bonRepository, BonIdValidator bonIdValidator, AddBonValidator addBonValidator, EditBonStatusValidator editBonStatusValidator, GhiseuIdValidator ghiseuIdValidator)
         {
             _bonRepository = bonRepository;
             _bonIdValidator = bonIdValidator;
             _addBonValidator = addBonValidator;
             _editBonStatusValidator = editBonStatusValidator;
             _ghiseuRepository = ghiseuRepository;
+            _ghiseuIdValidator = ghiseuIdValidator;
         }
 
         public async Task<BonDto> AddBon(BonDto bonDto)
@@ -57,6 +60,26 @@ namespace TicketApplication.Services
 
             return MapBonToBonDto(bon);
         }
+        public async Task<IEnumerable<BonDto>> GetAllBonByGhiseuId(int ghiseuId)
+        {
+            var validationResult = _ghiseuIdValidator.Validate(ghiseuId);
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
+            var ghiseu = await _ghiseuRepository.GetGhiseuById(ghiseuId);
+            if (ghiseu == null)
+            {
+                throw new KeyNotFoundException($"Ghiseu with ID {ghiseuId} not found.");
+            }
+            var bons = await _bonRepository.GetAllBonByGhiseuId(ghiseuId);
+            if (bons == null)
+            {
+                throw new KeyNotFoundException($"Ghiseu with ID {ghiseuId} not found.");
+            }
+            return bons.Select(bon => MapBonToBonDto(bon)).ToList();
+        }
+
 
         public async Task<IEnumerable<BonDto>> GetAllBon()
         {

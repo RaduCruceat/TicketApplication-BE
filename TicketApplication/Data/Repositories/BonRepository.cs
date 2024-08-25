@@ -22,6 +22,14 @@ namespace TicketApplication.Data.Repositories
                 return await con.QuerySingleOrDefaultAsync<Bon>(sql, new { Id = id });
             }
         }
+        public async Task<IEnumerable<Bon>> GetAllBonByGhiseuId(int ghiseuId)
+        {
+            using (var con = new SqlConnection(_connectionString))
+            {
+                string sql = "SELECT * FROM bon.Bon WHERE IdGhiseu = @GhiseuId";
+                return await con.QueryAsync<Bon>(sql, new { GhiseuId = ghiseuId });
+            }
+        }
 
         public async Task<IEnumerable<Bon>> GetAllBon()
         {
