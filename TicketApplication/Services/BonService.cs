@@ -1,8 +1,8 @@
-﻿using TicketApplication.Data.Entities;
+﻿using FluentValidation;
+using TicketApplication.Data.Entities;
 using TicketApplication.Data.Repositories;
 using TicketApplication.Services.Dtos;
 using TicketApplication.Validators.BonValidators;
-using FluentValidation;
 
 namespace TicketApplication.Services
 {
@@ -14,7 +14,7 @@ namespace TicketApplication.Services
         private readonly AddBonValidator _addBonValidator;
         private readonly EditBonStatusValidator _editBonStatusValidator;
 
-        public BonService(IGhiseuRepository ghiseuRepository,IBonRepository bonRepository, BonIdValidator bonIdValidator, AddBonValidator addBonValidator, EditBonStatusValidator editBonStatusValidator)
+        public BonService(IGhiseuRepository ghiseuRepository, IBonRepository bonRepository, BonIdValidator bonIdValidator, AddBonValidator addBonValidator, EditBonStatusValidator editBonStatusValidator)
         {
             _bonRepository = bonRepository;
             _bonIdValidator = bonIdValidator;
@@ -117,13 +117,13 @@ namespace TicketApplication.Services
         }
 
         private Bon MapBonDtoToBon(BonDto bonDto)
-        {      
+        {
             return new Bon
             {
                 IdGhiseu = bonDto.IdGhiseu,
                 Stare = bonDto.Stare,
                 CreatedAt = bonDto.CreatedAt,
-                ModifiedAt = bonDto.ModifiedAt, 
+                ModifiedAt = bonDto.ModifiedAt,
             };
         }
 

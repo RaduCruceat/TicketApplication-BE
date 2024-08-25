@@ -1,8 +1,8 @@
-﻿using TicketApplication.Data.Repositories;
+﻿using FluentValidation;
+using TicketApplication.Data.Entities;
+using TicketApplication.Data.Repositories;
 using TicketApplication.Services.Dtos;
 using TicketApplication.Validators.GhiseuValidators;
-using FluentValidation;
-using TicketApplication.Data.Entities;
 
 namespace TicketApplication.Services
 {
@@ -124,7 +124,7 @@ namespace TicketApplication.Services
             {
                 throw new ValidationException(validationResult.Errors);
             }
-            var ghiseu= await _ghiseuRepository.GetGhiseuById(ghiseuId);
+            var ghiseu = await _ghiseuRepository.GetGhiseuById(ghiseuId);
             if (ghiseu == null)
             {
                 throw new KeyNotFoundException($"Ghiseu with ID {ghiseuId} not found.");

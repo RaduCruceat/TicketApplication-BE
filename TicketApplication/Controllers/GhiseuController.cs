@@ -1,9 +1,7 @@
-﻿using TicketApplication.Services.Dtos;
-using TicketApplication.Services;
+﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using FluentValidation;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using TicketApplication.Services;
+using TicketApplication.Services.Dtos;
 
 [ApiController]
 [Route("[controller]")]
@@ -39,12 +37,12 @@ public class GhiseuController : ControllerBase
     {
         try
         {
-           var ghiseu = await _ghiseuService.GetGhiseuById(id);
-           if (ghiseu == null)
-           {
-               return NotFound($"Ghiseu with ID {id} not found.");
-           }
-           return Ok(ghiseu);
+            var ghiseu = await _ghiseuService.GetGhiseuById(id);
+            if (ghiseu == null)
+            {
+                return NotFound($"Ghiseu with ID {id} not found.");
+            }
+            return Ok(ghiseu);
         }
         catch (FluentValidation.ValidationException e)
         {

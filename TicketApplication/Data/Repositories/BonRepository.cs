@@ -1,7 +1,7 @@
-﻿using Microsoft.Data.SqlClient;
-using TicketApplication.Data.Entities;
-using Dapper;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
 using TicketApplication.Common;
+using TicketApplication.Data.Entities;
 
 namespace TicketApplication.Data.Repositories
 {
@@ -56,7 +56,7 @@ namespace TicketApplication.Data.Repositories
                 ModifiedAt = @ModifiedAt 
             WHERE Id = @Id";
 
-                await con.ExecuteAsync(sql,param: new { Stare = StareEnum.InCursDePreluare, ModifiedAt = DateTime.Now, Id = id });
+                await con.ExecuteAsync(sql, param: new { Stare = StareEnum.InCursDePreluare, ModifiedAt = DateTime.Now, Id = id });
             }
         }
 
@@ -70,7 +70,7 @@ namespace TicketApplication.Data.Repositories
                 ModifiedAt = @ModifiedAt 
             WHERE Id = @Id";
 
-                await con.ExecuteAsync(sql,param: new { Stare = StareEnum.Preluat, ModifiedAt = DateTime.Now, Id = id });
+                await con.ExecuteAsync(sql, param: new { Stare = StareEnum.Preluat, ModifiedAt = DateTime.Now, Id = id });
             }
         }
 
@@ -84,7 +84,7 @@ namespace TicketApplication.Data.Repositories
                 ModifiedAt = @ModifiedAt 
             WHERE Id = @Id";
 
-                await con.ExecuteAsync(sql, param:new { Stare = StareEnum.Inchis, ModifiedAt = DateTime.Now, Id = id });
+                await con.ExecuteAsync(sql, param: new { Stare = StareEnum.Inchis, ModifiedAt = DateTime.Now, Id = id });
             }
         }
     }

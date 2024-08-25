@@ -1,9 +1,7 @@
-﻿using TicketApplication.Services.Dtos;
-using TicketApplication.Services;
+﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using FluentValidation;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using TicketApplication.Services;
+using TicketApplication.Services.Dtos;
 
 [ApiController]
 [Route("[controller]")]

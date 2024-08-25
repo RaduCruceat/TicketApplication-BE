@@ -1,6 +1,4 @@
 ﻿using FluentMigrator.Runner;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using TicketApplication.Migrations;
 
 public class MigrationCode

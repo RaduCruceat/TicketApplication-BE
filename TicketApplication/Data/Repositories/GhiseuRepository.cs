@@ -60,7 +60,7 @@ namespace TicketApplication.Data.Repositories
 
                 await con.ExecuteAsync(
                     sql,
-                    param: new { ghiseu.Cod, ghiseu.Denumire, ghiseu.Descriere, ghiseu.Icon, ghiseu.Activ ,ghiseu.Id}
+                    param: new { ghiseu.Cod, ghiseu.Denumire, ghiseu.Descriere, ghiseu.Icon, ghiseu.Activ, ghiseu.Id }
                     );
             }
         }

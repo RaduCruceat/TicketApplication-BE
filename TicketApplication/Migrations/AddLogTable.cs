@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using FluentMigrator;
+﻿using FluentMigrator;
 
 namespace TicketApplication.Migrations
 {
