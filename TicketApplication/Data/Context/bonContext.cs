@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
 using TicketApplication.Data.Entities;
 
 namespace TicketApplication.Data.Context

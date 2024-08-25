@@ -85,10 +85,32 @@ namespace TicketApplication.Data.Repositories
 
         public async Task DeleteGhiseu(int id)
         {
+           
             using (var con = new SqlConnection(_connectionString))
             {
-                string sql = "DELETE FROM bon.Ghiseu WHERE Id = @Id";
-                await con.ExecuteAsync(sql, new { Id = id });
+                await con.OpenAsync();
+                using (var transaction = con.BeginTransaction())
+                {
+                    try
+                    {
+                        string deleteBonsSql = "DELETE FROM bon.Bon WHERE IdGhiseu = @Id";
+                        await con.ExecuteAsync(deleteBonsSql, new { Id = id }, transaction);
+
+                        string deleteGhiseuSql = "DELETE FROM bon.Ghiseu WHERE Id = @Id";
+                        await con.ExecuteAsync(deleteGhiseuSql, new { Id = id }, transaction);
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {  
+                        transaction.Rollback();
+                        throw;
+                    }
+                    finally
+                    { 
+                        await con.CloseAsync();
+                    }
+                }
             }
         }
     }
