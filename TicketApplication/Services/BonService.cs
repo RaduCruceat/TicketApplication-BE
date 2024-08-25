@@ -11,15 +11,15 @@ namespace TicketApplication.Services
         private readonly IBonRepository _bonRepository;
         private readonly IGhiseuRepository _ghiseuRepository;
         private readonly BonIdValidator _bonIdValidator;
-        private readonly CreateBonValidator _createBonValidator;
-        private readonly UpdateBonStatusValidator _updateBonStatusValidator;
+        private readonly AddBonValidator _addBonValidator;
+        private readonly EditBonStatusValidator _editBonStatusValidator;
 
-        public BonService(IGhiseuRepository ghiseuRepository,IBonRepository bonRepository, BonIdValidator bonIdValidator, CreateBonValidator createBonValidator, UpdateBonStatusValidator updateBonStatusValidator)
+        public BonService(IGhiseuRepository ghiseuRepository,IBonRepository bonRepository, BonIdValidator bonIdValidator, AddBonValidator addBonValidator, EditBonStatusValidator editBonStatusValidator)
         {
             _bonRepository = bonRepository;
             _bonIdValidator = bonIdValidator;
-            _createBonValidator = createBonValidator;
-            _updateBonStatusValidator = updateBonStatusValidator;
+            _addBonValidator = addBonValidator;
+            _editBonStatusValidator = editBonStatusValidator;
             _ghiseuRepository = ghiseuRepository;
         }
 
@@ -30,7 +30,7 @@ namespace TicketApplication.Services
             {
                 throw new KeyNotFoundException($"Ghiseu with ID {bonDto.IdGhiseu} not found.");
             }
-            var validationResult = _createBonValidator.Validate(bonDto);
+            var validationResult = _addBonValidator.Validate(bonDto);
             if (!validationResult.IsValid)
             {
                 throw new ValidationException(validationResult.Errors);

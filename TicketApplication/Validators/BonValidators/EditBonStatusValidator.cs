@@ -3,9 +3,9 @@ using TicketApplication.Services.Dtos;
 
 namespace TicketApplication.Validators.BonValidators
 {
-    public class UpdateBonStatusValidator : AbstractValidator<BonDto>
+    public class EditBonStatusValidator : AbstractValidator<BonDto>
     {
-        public UpdateBonStatusValidator()
+        public EditBonStatusValidator()
         {
             RuleFor(dto => dto.Stare).IsInEnum().WithMessage("Invalid value for Stare.");
         }

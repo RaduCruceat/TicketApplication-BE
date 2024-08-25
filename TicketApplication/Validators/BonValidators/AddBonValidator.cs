@@ -4,9 +4,9 @@ using TicketApplication.Validators.GhiseuValidators;
 
 namespace TicketApplication.Validators.BonValidators
 {
-    public class CreateBonValidator : AbstractValidator<BonDto>
+    public class AddBonValidator : AbstractValidator<BonDto>
     {
-        public CreateBonValidator()
+        public AddBonValidator()
         {
             RuleFor(b => b.IdGhiseu).SetValidator(new GhiseuIdValidator());
             RuleFor(b => b.Stare).IsInEnum().WithMessage("Invalid value for Stare.");

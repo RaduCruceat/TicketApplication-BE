@@ -10,24 +10,24 @@ namespace TicketApplication.Services
     {
         private readonly IGhiseuRepository _ghiseuRepository;
         private readonly GhiseuIdValidator _ghiseuIdValidator;
-        private readonly CreateGhiseuValidator _createGhiseuValidator;
-        private readonly UpdateGhiseuValidator _updateGhiseuValidator;
+        private readonly AddGhiseuValidator _addGhiseuValidator;
+        private readonly EditGhiseuValidator _editGhiseuValidator;
         private readonly DeleteGhiseuValidator _deleteGhiseuValidator;
         private readonly ActiveGhiseuValidator _activeGhiseuValidator;
 
-        public GhiseuService(IGhiseuRepository ghiseuRepository, GhiseuIdValidator ghiseuIdValidator, CreateGhiseuValidator createGhiseuValidator, UpdateGhiseuValidator updateGhiseuValidator, DeleteGhiseuValidator deleteGhiseuValidator, ActiveGhiseuValidator activeGhiseuValidator)
+        public GhiseuService(IGhiseuRepository ghiseuRepository, GhiseuIdValidator ghiseuIdValidator, AddGhiseuValidator addGhiseuValidator, EditGhiseuValidator editGhiseuValidator, DeleteGhiseuValidator deleteGhiseuValidator, ActiveGhiseuValidator activeGhiseuValidator)
         {
             _ghiseuRepository = ghiseuRepository;
             _ghiseuIdValidator = ghiseuIdValidator;
-            _createGhiseuValidator = createGhiseuValidator;
-            _updateGhiseuValidator = updateGhiseuValidator;
+            _addGhiseuValidator = addGhiseuValidator;
+            _editGhiseuValidator = editGhiseuValidator;
             _deleteGhiseuValidator = deleteGhiseuValidator;
             _activeGhiseuValidator = activeGhiseuValidator;
         }
 
         public async Task<GhiseuDto> AddGhiseu(GhiseuDto ghiseuDto)
         {
-            var validationResult = _createGhiseuValidator.Validate(ghiseuDto);
+            var validationResult = _addGhiseuValidator.Validate(ghiseuDto);
             if (!validationResult.IsValid)
             {
                 throw new ValidationException(validationResult.Errors);
@@ -63,7 +63,7 @@ namespace TicketApplication.Services
 
         public async Task<GhiseuDto> EditGhiseu(int ghiseuId, GhiseuDto ghiseuDto)
         {
-            var validationResult = _updateGhiseuValidator.Validate((ghiseuId, ghiseuDto));
+            var validationResult = _editGhiseuValidator.Validate((ghiseuId, ghiseuDto));
             if (!validationResult.IsValid)
             {
                 throw new ValidationException(validationResult.Errors);

@@ -3,9 +3,9 @@ using TicketApplication.Services.Dtos;
 
 namespace TicketApplication.Validators.GhiseuValidators
 {
-    public class CreateGhiseuValidator : AbstractValidator<GhiseuDto>
+    public class AddGhiseuValidator : AbstractValidator<GhiseuDto>
     {
-        public CreateGhiseuValidator()
+        public AddGhiseuValidator()
         {
             RuleFor(g => g.Cod).NotEmpty().MaximumLength(50);
             RuleFor(g => g.Denumire).NotEmpty().MaximumLength(50);

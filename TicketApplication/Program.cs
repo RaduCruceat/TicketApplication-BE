@@ -46,14 +46,14 @@ builder.Services.AddDbContext<BonContext>(options =>
 
 // Register validators
 builder.Services.AddScoped<GhiseuIdValidator>();
-builder.Services.AddScoped<CreateGhiseuValidator>();
+builder.Services.AddScoped<AddGhiseuValidator>();
 builder.Services.AddScoped<ActiveGhiseuValidator>();
 builder.Services.AddScoped<DeleteGhiseuValidator>();
-builder.Services.AddScoped<UpdateGhiseuValidator>();
+builder.Services.AddScoped<EditGhiseuValidator>();
 
 builder.Services.AddScoped<BonIdValidator>();
-builder.Services.AddScoped<CreateBonValidator>();
-builder.Services.AddScoped<UpdateBonStatusValidator>();
+builder.Services.AddScoped<AddBonValidator>();
+builder.Services.AddScoped<EditBonStatusValidator>();
 
 //
 var app = builder.Build();

@@ -3,9 +3,9 @@ using TicketApplication.Services.Dtos;
 
 namespace TicketApplication.Validators.GhiseuValidators
 {
-    public class UpdateGhiseuValidator : AbstractValidator<(int, GhiseuDto)>
+    public class EditGhiseuValidator : AbstractValidator<(int, GhiseuDto)>
     {
-        public UpdateGhiseuValidator()
+        public EditGhiseuValidator()
         {
             RuleFor(tuple => tuple.Item1).GreaterThan(0);
             RuleFor(tuple => tuple.Item2.Cod).NotEmpty().MaximumLength(50);
