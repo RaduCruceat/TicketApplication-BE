@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TicketApplication.Services;
 using TicketApplication.Services.Dtos;
+using TicketApplication.Validators.ResponseValidator;
 
 [ApiController]
 [Route("[controller]")]
@@ -15,160 +16,160 @@ public class BonController : ControllerBase
     }
 
     [HttpGet("GetAll", Name = "GetAllBon")]
-    public async Task<ActionResult<IEnumerable<BonDto>>> GetAllBon()
+    public async Task<ActionResult<ResponseValidator<IEnumerable<BonDto>>>> GetAllBon()
     {
         try
         {
             var bonList = await _bonService.GetAllBon();
-            return Ok(bonList);
+            return Ok(ResponseValidator<IEnumerable<BonDto>>.Success(bonList));
         }
-        catch (FluentValidation.ValidationException e)
+        catch (ValidationException e)
         {
-            return BadRequest(e.Errors);
+            return BadRequest(ResponseValidator<IEnumerable<BonDto>>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (Exception e)
         {
-            return StatusCode(500, $"An error occurred: {e.Message}");
+            return StatusCode(500, ResponseValidator<IEnumerable<BonDto>>.Failure($"An error occurred: {e.Message}"));
         }
     }
 
     [HttpGet("Get/{id}", Name = "GetBonById")]
-    public async Task<ActionResult<BonDto>> GetBonById(int id)
+    public async Task<ActionResult<ResponseValidator<BonDto>>> GetBonById(int id)
     {
         try
         {
             var bon = await _bonService.GetBonById(id);
             if (bon == null)
             {
-                return NotFound($"Bon with ID {id} not found.");
+                return NotFound(ResponseValidator<BonDto>.Failure($"Bon with ID {id} not found."));
             }
-            return Ok(bon);
+            return Ok(ResponseValidator<BonDto>.Success(bon));
         }
         catch (ValidationException e)
         {
-            return BadRequest(e.Errors);
+            return BadRequest(ResponseValidator<BonDto>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (KeyNotFoundException e)
         {
-            return NotFound(e.Message);
+            return NotFound(ResponseValidator<BonDto>.Failure(e.Message));
         }
         catch (Exception e)
         {
-            return StatusCode(500, $"An error occurred: {e.Message}");
+            return StatusCode(500, ResponseValidator<BonDto>.Failure($"An error occurred: {e.Message}"));
         }
     }
+
     [HttpGet("GetAll/{ghiseuId}", Name = "GetAllBonsByGhiseuId")]
-    public async Task<ActionResult<IEnumerable<BonDto>>> GetAllBonByGhiseuId(int ghiseuId)
+    public async Task<ActionResult<ResponseValidator<IEnumerable<BonDto>>>> GetAllBonByGhiseuId(int ghiseuId)
     {
         try
         {
             var bons = await _bonService.GetAllBonByGhiseuId(ghiseuId);
-            return Ok(bons);
+            return Ok(ResponseValidator<IEnumerable<BonDto>>.Success(bons));
         }
-        catch (FluentValidation.ValidationException e)
+        catch (ValidationException e)
         {
-            return BadRequest(e.Errors);
+            return BadRequest(ResponseValidator<IEnumerable<BonDto>>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (Exception e)
         {
-            return StatusCode(500, $"An error occurred: {e.Message}");
+            return StatusCode(500, ResponseValidator<IEnumerable<BonDto>>.Failure($"An error occurred: {e.Message}"));
         }
     }
 
-
     [HttpPost("Add", Name = "AddBon")]
-    public async Task<ActionResult<BonDto>> AddBon([FromBody] BonDto bon)
+    public async Task<ActionResult<ResponseValidator<BonDto>>> AddBon([FromBody] BonDto bon)
     {
         try
         {
             var addedBon = await _bonService.AddBon(bon);
-            return Ok(addedBon);
+            return Ok(ResponseValidator<BonDto>.Success(addedBon));
         }
         catch (ValidationException e)
         {
-            return BadRequest(e.Errors);
+            return BadRequest(ResponseValidator<BonDto>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (Exception e)
         {
-            return StatusCode(500, $"An error occurred: {e.Message}");
+            return StatusCode(500, ResponseValidator<BonDto>.Failure($"An error occurred: {e.Message}"));
         }
     }
 
     [HttpPut("MarkAsInProgress/{id}", Name = "MarkBonAsInProgress")]
-    public async Task<ActionResult<BonDto>> MarkAsInProgress(int id)
+    public async Task<ActionResult<ResponseValidator<BonDto>>> MarkAsInProgress(int id)
     {
         try
         {
             var updatedBon = await _bonService.MarkAsInProgress(id);
             if (updatedBon == null)
             {
-                return NotFound($"Bon with ID {id} not found.");
+                return NotFound(ResponseValidator<BonDto>.Failure($"Bon with ID {id} not found."));
             }
-            return Ok(updatedBon);
+            return Ok(ResponseValidator<BonDto>.Success(updatedBon));
         }
         catch (ValidationException e)
         {
-            return BadRequest(e.Errors);
+            return BadRequest(ResponseValidator<BonDto>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (KeyNotFoundException e)
         {
-            return NotFound(e.Message);
+            return NotFound(ResponseValidator<BonDto>.Failure(e.Message));
         }
         catch (Exception e)
         {
-            return StatusCode(500, $"An error occurred: {e.Message}");
+            return StatusCode(500, ResponseValidator<BonDto>.Failure($"An error occurred: {e.Message}"));
         }
     }
 
     [HttpPut("MarkAsReceived/{id}", Name = "MarkBonAsReceived")]
-    public async Task<ActionResult<BonDto>> MarkAsReceived(int id)
+    public async Task<ActionResult<ResponseValidator<BonDto>>> MarkAsReceived(int id)
     {
         try
         {
             var updatedBon = await _bonService.MarkAsReceived(id);
             if (updatedBon == null)
             {
-                return NotFound($"Bon with ID {id} not found.");
+                return NotFound(ResponseValidator<BonDto>.Failure($"Bon with ID {id} not found."));
             }
-            return Ok(updatedBon);
+            return Ok(ResponseValidator<BonDto>.Success(updatedBon));
         }
         catch (ValidationException e)
         {
-            return BadRequest(e.Errors);
+            return BadRequest(ResponseValidator<BonDto>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (KeyNotFoundException e)
         {
-            return NotFound(e.Message);
+            return NotFound(ResponseValidator<BonDto>.Failure(e.Message));
         }
         catch (Exception e)
         {
-            return StatusCode(500, $"An error occurred: {e.Message}");
+            return StatusCode(500, ResponseValidator<BonDto>.Failure($"An error occurred: {e.Message}"));
         }
     }
 
     [HttpPut("MarkAsClose/{id}", Name = "MarkBonAsClose")]
-    public async Task<ActionResult<BonDto>> MarkAsClose(int id)
+    public async Task<ActionResult<ResponseValidator<BonDto>>> MarkAsClose(int id)
     {
         try
         {
             var updatedBon = await _bonService.MarkAsClosed(id);
             if (updatedBon == null)
             {
-                return NotFound($"Bon with ID {id} not found.");
+                return NotFound(ResponseValidator<BonDto>.Failure($"Bon with ID {id} not found."));
             }
-            return Ok(updatedBon);
+            return Ok(ResponseValidator<BonDto>.Success(updatedBon));
         }
         catch (ValidationException e)
         {
-            return BadRequest(e.Errors);
+            return BadRequest(ResponseValidator<BonDto>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (KeyNotFoundException e)
         {
-            return NotFound(e.Message);
+            return NotFound(ResponseValidator<BonDto>.Failure(e.Message));
         }
         catch (Exception e)
         {
-            return StatusCode(500, $"An error occurred: {e.Message}");
+            return StatusCode(500, ResponseValidator<BonDto>.Failure($"An error occurred: {e.Message}"));
         }
     }
 }
