@@ -54,13 +54,12 @@ namespace TicketApplication.Data.Repositories
                 Cod = @Cod, 
                 Denumire = @Denumire, 
                 Descriere = @Descriere, 
-                Icon = @Icon, 
-                Activ = @Activ 
+                Icon = @Icon 
             WHERE Id = @Id";
 
                 await con.ExecuteAsync(
                     sql,
-                    param: new { ghiseu.Cod, ghiseu.Denumire, ghiseu.Descriere, ghiseu.Icon, ghiseu.Activ, ghiseu.Id }
+                    param: new { ghiseu.Cod, ghiseu.Denumire, ghiseu.Descriere, ghiseu.Icon, ghiseu.Id }
                     );
             }
         }

@@ -61,9 +61,9 @@ namespace TicketApplication.Services
             return allGhiseu.Select(ghiseu => MapGhiseuToGhiseuDto(ghiseu)).ToList();
         }
 
-        public async Task<GhiseuDto> EditGhiseu(int ghiseuId, GhiseuDto ghiseuDto)
+        public async Task<EditGhiseuDto> EditGhiseu(int ghiseuId, EditGhiseuDto editGhiseuDto)
         {
-            var validationResult = _editGhiseuValidator.Validate((ghiseuId, ghiseuDto));
+            var validationResult = _editGhiseuValidator.Validate((ghiseuId, editGhiseuDto));
             if (!validationResult.IsValid)
             {
                 throw new ValidationException(validationResult.Errors);
@@ -75,11 +75,11 @@ namespace TicketApplication.Services
                 throw new KeyNotFoundException($"Ghiseu with ID {ghiseuId} not found.");
             }
 
-            var ghiseuNewInfo = MapGhiseuDtoToGhiseu(ghiseuDto);
+            var ghiseuNewInfo = MapEditGhiseuDtoToGhiseu(editGhiseuDto);
             ghiseuNewInfo.Id = ghiseuId;
 
             await _ghiseuRepository.EditGhiseu(ghiseuNewInfo);
-            return MapGhiseuToGhiseuDto(ghiseuNewInfo);
+            return MapGhiseuToEditGhiseuDto(ghiseuNewInfo);
         }
 
         public async Task<GhiseuDto> MarkAsActive(int ghiseuId)
@@ -158,6 +158,29 @@ namespace TicketApplication.Services
                 Descriere = ghiseu.Descriere,
                 Icon = ghiseu.Icon,
                 Activ = ghiseu.Activ
+            };
+        }
+
+        private Ghiseu MapEditGhiseuDtoToGhiseu(EditGhiseuDto editGhiseuDto)
+        {
+            return new Ghiseu
+            {
+                Cod = editGhiseuDto.Cod,
+                Denumire = editGhiseuDto.Denumire,
+                Descriere = editGhiseuDto.Descriere,
+                Icon = editGhiseuDto.Icon,     
+            };
+        }
+
+        // Mapping from Entity to DTO
+        private EditGhiseuDto MapGhiseuToEditGhiseuDto(Ghiseu ghiseu)
+        {
+            return new EditGhiseuDto
+            {
+                Cod = ghiseu.Cod,
+                Denumire = ghiseu.Denumire,
+                Descriere = ghiseu.Descriere,
+                Icon = ghiseu.Icon,
             };
         }
     }

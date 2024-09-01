@@ -77,6 +77,32 @@ public class GhiseuController : ControllerBase
         }
     }
 
+    [HttpPut("Edit/{id}", Name = "EditGhiseu")]
+    public async Task<ActionResult<ResponseValidator<EditGhiseuDto>>> EditGhiseu(int id, [FromBody] EditGhiseuDto ghiseu)
+    {
+        try
+        {
+            var updatedGhiseu = await _ghiseuService.EditGhiseu(id, ghiseu);
+            if (updatedGhiseu == null)
+            {
+                return NotFound(ResponseValidator<EditGhiseuDto>.Failure($"Ghiseu with ID {id} not found."));
+            }
+            return Ok(ResponseValidator<EditGhiseuDto>.Success(updatedGhiseu));
+        }
+        catch (ValidationException e)
+        {
+            return BadRequest(ResponseValidator<EditGhiseuDto>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
+        }
+        catch (KeyNotFoundException e)
+        {
+            return NotFound(ResponseValidator<EditGhiseuDto>.Failure(e.Message));
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, ResponseValidator<EditGhiseuDto>.Failure($"An error occurred: {e.Message}"));
+        }
+    }
+
     [HttpPut("MarkAsActive/{id}", Name = "MarkGhiseuAsActive")]
     public async Task<ActionResult<ResponseValidator<GhiseuDto>>> MarkAsActive(int id)
     {
