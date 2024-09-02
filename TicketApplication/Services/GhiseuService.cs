@@ -1,7 +1,8 @@
 ﻿using FluentValidation;
 using TicketApplication.Data.Entities;
 using TicketApplication.Data.Repositories;
-using TicketApplication.Services.Dtos;
+using TicketApplication.Services.Dtos.BonDtos;
+using TicketApplication.Services.Dtos.GhiseuDtos;
 using TicketApplication.Validators.GhiseuValidators;
 
 namespace TicketApplication.Services
@@ -55,10 +56,10 @@ namespace TicketApplication.Services
             return MapGhiseuToGhiseuDto(ghiseu);
         }
 
-        public async Task<IEnumerable<GhiseuDto>> GetAllGhiseu()
+        public async Task<IEnumerable<GhiseuDtoID>> GetAllGhiseu()
         {
             var allGhiseu = await _ghiseuRepository.GetAllGhiseu();
-            return allGhiseu.Select(ghiseu => MapGhiseuToGhiseuDto(ghiseu)).ToList();
+            return allGhiseu.Select(ghiseu => MapGhiseuToGhiseuDtoID(ghiseu)).ToList();
         }
 
         public async Task<EditGhiseuDto> EditGhiseu(int ghiseuId, EditGhiseuDto editGhiseuDto)
@@ -135,7 +136,7 @@ namespace TicketApplication.Services
             return MapGhiseuToGhiseuDto(ghiseu);
         }
 
-        // Mapping from DTO to Entity
+       //normal
         private Ghiseu MapGhiseuDtoToGhiseu(GhiseuDto ghiseuDto)
         {
             return new Ghiseu
@@ -148,7 +149,7 @@ namespace TicketApplication.Services
             };
         }
 
-        // Mapping from Entity to DTO
+        
         private GhiseuDto MapGhiseuToGhiseuDto(Ghiseu ghiseu)
         {
             return new GhiseuDto
@@ -160,7 +161,7 @@ namespace TicketApplication.Services
                 Activ = ghiseu.Activ
             };
         }
-
+        //edit
         private Ghiseu MapEditGhiseuDtoToGhiseu(EditGhiseuDto editGhiseuDto)
         {
             return new Ghiseu
@@ -172,7 +173,6 @@ namespace TicketApplication.Services
             };
         }
 
-        // Mapping from Entity to DTO
         private EditGhiseuDto MapGhiseuToEditGhiseuDto(Ghiseu ghiseu)
         {
             return new EditGhiseuDto
@@ -181,6 +181,33 @@ namespace TicketApplication.Services
                 Denumire = ghiseu.Denumire,
                 Descriere = ghiseu.Descriere,
                 Icon = ghiseu.Icon,
+            };
+        }
+        //id
+
+        private Ghiseu MapGhiseuDtoIDToGhiseu(GhiseuDtoID ghiseuDto)
+        {
+            return new Ghiseu
+            {
+                Id = ghiseuDto.Id,
+                Cod = ghiseuDto.Cod,
+                Denumire = ghiseuDto.Denumire,
+                Descriere = ghiseuDto.Descriere,
+                Icon = ghiseuDto.Icon,
+                Activ = ghiseuDto.Activ
+            };
+        }
+
+        private GhiseuDtoID MapGhiseuToGhiseuDtoID(Ghiseu ghiseu)
+        {
+            return new GhiseuDtoID
+            {
+                Id = ghiseu.Id,
+                Cod = ghiseu.Cod,
+                Denumire = ghiseu.Denumire,
+                Descriere = ghiseu.Descriere,
+                Icon = ghiseu.Icon,
+                Activ = ghiseu.Activ
             };
         }
     }

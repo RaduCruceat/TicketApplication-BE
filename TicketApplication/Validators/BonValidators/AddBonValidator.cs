@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using TicketApplication.Services.Dtos;
+using TicketApplication.Services.Dtos.BonDtos;
 using TicketApplication.Validators.GhiseuValidators;
 
 namespace TicketApplication.Validators.BonValidators

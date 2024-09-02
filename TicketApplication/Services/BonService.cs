@@ -1,7 +1,8 @@
 ﻿using FluentValidation;
 using TicketApplication.Data.Entities;
 using TicketApplication.Data.Repositories;
-using TicketApplication.Services.Dtos;
+using TicketApplication.Services.Dtos.BonDtos ;
+using TicketApplication.Services.Dtos.GhiseuDtos;
 using TicketApplication.Validators.BonValidators;
 using TicketApplication.Validators.GhiseuValidators;
 
@@ -60,7 +61,7 @@ namespace TicketApplication.Services
 
             return MapBonToBonDto(bon);
         }
-        public async Task<IEnumerable<BonDto>> GetAllBonByGhiseuId(int ghiseuId)
+        public async Task<IEnumerable<BonDtoID>> GetAllBonByGhiseuId(int ghiseuId)
         {
             var validationResult = _ghiseuIdValidator.Validate(ghiseuId);
             if (!validationResult.IsValid)
@@ -77,14 +78,14 @@ namespace TicketApplication.Services
             {
                 throw new KeyNotFoundException($"Ghiseu with ID {ghiseuId} not found.");
             }
-            return bons.Select(bon => MapBonToBonDto(bon)).ToList();
+            return bons.Select(bon => MapBonToBonDtoID(bon)).ToList();
         }
 
 
-        public async Task<IEnumerable<BonDto>> GetAllBon()
+        public async Task<IEnumerable<BonDtoID>> GetAllBon()
         {
             var bonuri = await _bonRepository.GetAllBon();
-            return bonuri.Select(bon => MapBonToBonDto(bon)).ToList();
+            return bonuri.Select(bon => MapBonToBonDtoID(bon)).ToList();
         }
 
         public async Task<BonDto> MarkAsInProgress(int bonId)
@@ -160,5 +161,32 @@ namespace TicketApplication.Services
                 ModifiedAt = bon.ModifiedAt
             };
         }
+
+        //with id
+        private Bon MapBonDtoIDToBon(BonDtoID bonDto)
+        {
+            return new Bon
+            {
+                Id = bonDto.Id,
+                IdGhiseu = bonDto.IdGhiseu,
+                Stare = bonDto.Stare,
+                CreatedAt = bonDto.CreatedAt,
+                ModifiedAt = bonDto.ModifiedAt,
+            };
+        }
+
+        private BonDtoID MapBonToBonDtoID(Bon bon)
+        {
+            return new BonDtoID
+            {
+                Id = bon.Id,
+                IdGhiseu = bon.IdGhiseu,
+                Stare = bon.Stare,
+                CreatedAt = bon.CreatedAt,
+                ModifiedAt = bon.ModifiedAt
+            };
+        }
+
+
     }
 }

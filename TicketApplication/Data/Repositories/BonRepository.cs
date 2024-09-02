@@ -29,7 +29,7 @@ namespace TicketApplication.Data.Repositories
                 string sql = @"
             SELECT * FROM bon.Bon
             WHERE IdGhiseu = @GhiseuId
-            ORDER BY CreatedAt ASC, Stare ASC";
+            ORDER BY Stare ASC, CreatedAt ASC";
                 return await con.QueryAsync<Bon>(sql, new { GhiseuId = ghiseuId });
             }
         }
@@ -40,7 +40,7 @@ namespace TicketApplication.Data.Repositories
             {
                 string sql = @"
             SELECT * FROM bon.Bon
-            ORDER BY CreatedAt ASC, Stare ASC";
+            ORDER BY Stare ASC, CreatedAt ASC";
                 return await con.QueryAsync<Bon>(sql);
             }
         }

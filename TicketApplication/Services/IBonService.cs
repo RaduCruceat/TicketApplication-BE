@@ -1,4 +1,4 @@
-﻿using TicketApplication.Services.Dtos;
+﻿using TicketApplication.Services.Dtos.BonDtos;
 
 namespace TicketApplication.Services
 {
@@ -6,8 +6,8 @@ namespace TicketApplication.Services
     {
         Task<BonDto> AddBon(BonDto bonDto);
         Task<BonDto> GetBonById(int bonId);
-        Task<IEnumerable<BonDto>> GetAllBonByGhiseuId(int ghiseuId);
-        Task<IEnumerable<BonDto>> GetAllBon();
+        Task<IEnumerable<BonDtoID>> GetAllBonByGhiseuId(int ghiseuId);
+        Task<IEnumerable<BonDtoID>> GetAllBon();
         Task<BonDto> MarkAsInProgress(int bonId);
         Task<BonDto> MarkAsReceived(int bonId);
         Task<BonDto> MarkAsClosed(int bonId);

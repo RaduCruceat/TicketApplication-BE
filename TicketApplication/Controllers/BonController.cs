@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using TicketApplication.Services;
-using TicketApplication.Services.Dtos;
+using TicketApplication.Services.Dtos.BonDtos;
 using TicketApplication.Validators.ResponseValidator;
 
 [ApiController]
@@ -16,20 +16,20 @@ public class BonController : ControllerBase
     }
 
     [HttpGet("GetAll", Name = "GetAllBon")]
-    public async Task<ActionResult<ResponseValidator<IEnumerable<BonDto>>>> GetAllBon()
+    public async Task<ActionResult<ResponseValidator<IEnumerable<BonDtoID>>>> GetAllBon()
     {
         try
         {
             var bonList = await _bonService.GetAllBon();
-            return Ok(ResponseValidator<IEnumerable<BonDto>>.Success(bonList));
+            return Ok(ResponseValidator<IEnumerable<BonDtoID>>.Success(bonList));
         }
         catch (ValidationException e)
         {
-            return BadRequest(ResponseValidator<IEnumerable<BonDto>>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
+            return BadRequest(ResponseValidator<IEnumerable<BonDtoID>>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (Exception e)
         {
-            return StatusCode(500, ResponseValidator<IEnumerable<BonDto>>.Failure($"An error occurred: {e.Message}"));
+            return StatusCode(500, ResponseValidator<IEnumerable<BonDtoID>>.Failure($"An error occurred: {e.Message}"));
         }
     }
 
@@ -60,20 +60,20 @@ public class BonController : ControllerBase
     }
 
     [HttpGet("GetAll/{ghiseuId}", Name = "GetAllBonsByGhiseuId")]
-    public async Task<ActionResult<ResponseValidator<IEnumerable<BonDto>>>> GetAllBonByGhiseuId(int ghiseuId)
+    public async Task<ActionResult<ResponseValidator<IEnumerable<BonDtoID>>>> GetAllBonByGhiseuId(int ghiseuId)
     {
         try
         {
             var bons = await _bonService.GetAllBonByGhiseuId(ghiseuId);
-            return Ok(ResponseValidator<IEnumerable<BonDto>>.Success(bons));
+            return Ok(ResponseValidator<IEnumerable<BonDtoID>>.Success(bons));
         }
         catch (ValidationException e)
         {
-            return BadRequest(ResponseValidator<IEnumerable<BonDto>>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
+            return BadRequest(ResponseValidator<IEnumerable<BonDtoID>>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (Exception e)
         {
-            return StatusCode(500, ResponseValidator<IEnumerable<BonDto>>.Failure($"An error occurred: {e.Message}"));
+            return StatusCode(500, ResponseValidator<IEnumerable<BonDtoID>>.Failure($"An error occurred: {e.Message}"));
         }
     }
 

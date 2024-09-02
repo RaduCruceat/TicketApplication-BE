@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using TicketApplication.Services;
-using TicketApplication.Services.Dtos;
+using TicketApplication.Services.Dtos.GhiseuDtos;
 using TicketApplication.Validators.ResponseValidator;
 
 [ApiController]
@@ -16,20 +16,20 @@ public class GhiseuController : ControllerBase
     }
 
     [HttpGet("GetAll", Name = "GetAllGhiseu")]
-    public async Task<ActionResult<ResponseValidator<IEnumerable<GhiseuDto>>>> GetAllGhiseu()
+    public async Task<ActionResult<ResponseValidator<IEnumerable<GhiseuDtoID>>>> GetAllGhiseu()
     {
         try
         {
             var ghiseuList = await _ghiseuService.GetAllGhiseu();
-            return Ok(ResponseValidator<IEnumerable<GhiseuDto>>.Success(ghiseuList));
+            return Ok(ResponseValidator<IEnumerable<GhiseuDtoID>>.Success(ghiseuList));
         }
         catch (ValidationException e)
         {
-            return BadRequest(ResponseValidator<IEnumerable<GhiseuDto>>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
+            return BadRequest(ResponseValidator<IEnumerable<GhiseuDtoID>>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (Exception e)
         {
-            return StatusCode(500, ResponseValidator<IEnumerable<GhiseuDto>>.Failure($"An error occurred: {e.Message}"));
+            return StatusCode(500, ResponseValidator<IEnumerable<GhiseuDtoID>>.Failure($"An error occurred: {e.Message}"));
         }
     }
 

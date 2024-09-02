@@ -1,4 +1,4 @@
-﻿using TicketApplication.Services.Dtos;
+﻿using TicketApplication.Services.Dtos.GhiseuDtos;
 
 namespace TicketApplication.Services
 {
@@ -6,7 +6,7 @@ namespace TicketApplication.Services
     {
         Task<GhiseuDto> AddGhiseu(GhiseuDto ghiseuDto);
         Task<GhiseuDto> GetGhiseuById(int ghiseuId);
-        Task<IEnumerable<GhiseuDto>> GetAllGhiseu();
+        Task<IEnumerable<GhiseuDtoID>> GetAllGhiseu();
         Task<EditGhiseuDto> EditGhiseu(int ghiseuId, EditGhiseuDto editGhiseuDto);
         Task<GhiseuDto> MarkAsActive(int ghiseuId);
         Task<GhiseuDto> MarkAsInactive(int ghiseuId);
