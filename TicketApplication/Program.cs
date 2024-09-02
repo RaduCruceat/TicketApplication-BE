@@ -13,6 +13,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173") 
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
+});
+
 
 builder.Services.AddScoped<IGhiseuService, GhiseuService>();
 builder.Services.AddScoped<IBonService, BonService>();
@@ -64,6 +75,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("AllowSpecificOrigin");
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
