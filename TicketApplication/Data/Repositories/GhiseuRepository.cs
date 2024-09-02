@@ -27,7 +27,9 @@ namespace TicketApplication.Data.Repositories
         {
             using (var con = new SqlConnection(_connectionString))
             {
-                string sql = "SELECT * FROM bon.Ghiseu";
+                string sql = @"
+            SELECT * FROM bon.Ghiseu
+            ORDER BY Activ ASC, Denumire ASC";
                 return await con.QueryAsync<Ghiseu>(sql);
             }
         }

@@ -26,7 +26,10 @@ namespace TicketApplication.Data.Repositories
         {
             using (var con = new SqlConnection(_connectionString))
             {
-                string sql = "SELECT * FROM bon.Bon WHERE IdGhiseu = @GhiseuId";
+                string sql = @"
+            SELECT * FROM bon.Bon
+            WHERE IdGhiseu = @GhiseuId
+            ORDER BY CreatedAt ASC, Stare ASC";
                 return await con.QueryAsync<Bon>(sql, new { GhiseuId = ghiseuId });
             }
         }
@@ -35,7 +38,9 @@ namespace TicketApplication.Data.Repositories
         {
             using (var con = new SqlConnection(_connectionString))
             {
-                string sql = "SELECT * FROM bon.Bon";
+                string sql = @"
+            SELECT * FROM bon.Bon
+            ORDER BY CreatedAt ASC, Stare ASC";
                 return await con.QueryAsync<Bon>(sql);
             }
         }
