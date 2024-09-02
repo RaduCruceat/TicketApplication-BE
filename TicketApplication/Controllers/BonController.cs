@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using TicketApplication.Data.Entities;
 using TicketApplication.Services;
 using TicketApplication.Services.Dtos.BonDtos;
 using TicketApplication.Validators.ResponseValidator;
@@ -21,6 +22,10 @@ public class BonController : ControllerBase
         try
         {
             var bonList = await _bonService.GetAllBon();
+            if (bonList == null)
+            {
+                return NotFound(ResponseValidator<BonDtoID>.Failure($"Bon list is empty."));
+            }
             return Ok(ResponseValidator<IEnumerable<BonDtoID>>.Success(bonList));
         }
         catch (ValidationException e)
@@ -65,6 +70,10 @@ public class BonController : ControllerBase
         try
         {
             var bons = await _bonService.GetAllBonByGhiseuId(ghiseuId);
+            if (bons == null)
+            {
+                return NotFound(ResponseValidator<BonDtoID>.Failure($"Bons with IdGhiseu: {ghiseuId} not found."));
+            }
             return Ok(ResponseValidator<IEnumerable<BonDtoID>>.Success(bons));
         }
         catch (ValidationException e)

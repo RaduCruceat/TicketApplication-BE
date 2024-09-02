@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using TicketApplication.Data.Entities;
 using TicketApplication.Services;
 using TicketApplication.Services.Dtos.GhiseuDtos;
 using TicketApplication.Validators.ResponseValidator;
@@ -21,6 +22,10 @@ public class GhiseuController : ControllerBase
         try
         {
             var ghiseuList = await _ghiseuService.GetAllGhiseu();
+            if (ghiseuList == null)
+            {
+                return NotFound(ResponseValidator<GhiseuDtoID>.Failure($"Ghiseu list is empty"));
+            }
             return Ok(ResponseValidator<IEnumerable<GhiseuDtoID>>.Success(ghiseuList));
         }
         catch (ValidationException e)
