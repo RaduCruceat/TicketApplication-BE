@@ -70,7 +70,7 @@ public class BonController : ControllerBase
         try
         {
             var bons = await _bonService.GetAllBonByGhiseuId(ghiseuId);
-            if (bons == null)
+            if (bons == null || !bons.Any())
             {
                 return NotFound(ResponseValidator<BonDtoID>.Failure($"Bons with IdGhiseu: {ghiseuId} not found."));
             }

@@ -76,7 +76,7 @@ namespace TicketApplication.Services
             var bons = await _bonRepository.GetAllBonByGhiseuId(ghiseuId);
             if (bons == null)
             {
-                throw new KeyNotFoundException($"Ghiseu with ID {ghiseuId} not found.");
+                throw new KeyNotFoundException($"Bons with ghiseuId {ghiseuId} not found.");
             }
             return bons.Select(bon => MapBonToBonDtoID(bon)).ToList();
         }
