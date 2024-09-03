@@ -15,6 +15,28 @@ public class GhiseuController : ControllerBase
     {
         _ghiseuService = ghiseuService;
     }
+    [HttpGet("GetIcons", Name = "GetAllIcons")]
+    public ActionResult<ResponseValidator<IEnumerable<string?>>> GetIcons()
+    {
+        try
+        {
+            var iconsPath = Path.Combine(Directory.GetCurrentDirectory(), "Images");
+            var icons = Directory.GetFiles(iconsPath)
+                                 .Select(Path.GetFileName)
+                                 .ToList();
+
+            if (!icons.Any())
+            {
+                return NotFound(ResponseValidator<IEnumerable<string?>>.Failure("No icons found."));
+            }
+            return Ok(ResponseValidator<IEnumerable<string?>>.Success(icons));
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, ResponseValidator<IEnumerable<string?>>.Failure($"An error occurred: {e.Message}"));
+        }
+    }
+
 
     [HttpGet("GetAll", Name = "GetAllGhiseu")]
     public async Task<ActionResult<ResponseValidator<IEnumerable<GhiseuDtoID>>>> GetAllGhiseu()
