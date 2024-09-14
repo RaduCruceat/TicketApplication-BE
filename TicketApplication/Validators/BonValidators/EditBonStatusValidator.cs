@@ -7,7 +7,7 @@ namespace TicketApplication.Validators.BonValidators
     {
         public EditBonStatusValidator()
         {
-            RuleFor(dto => dto.Stare).IsInEnum().WithMessage("Invalid value for Stare.");
+            RuleFor(dto => dto.Stare).IsInEnum().WithMessage("Starea trebuie sa aiba valoarea 0,1 sau 2.");
         }
     }
 }

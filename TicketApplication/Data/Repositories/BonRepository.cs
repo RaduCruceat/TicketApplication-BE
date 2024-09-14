@@ -30,7 +30,7 @@ namespace TicketApplication.Data.Repositories
             SELECT * FROM bon.Bon
             WHERE IdGhiseu = @GhiseuId
             ORDER BY Stare ASC, CreatedAt ASC";
-                return await con.QueryAsync<Bon>(sql, new { GhiseuId = ghiseuId });
+                return await con.QueryAsync<Bon>(sql, param: new { GhiseuId = ghiseuId });
             }
         }
 

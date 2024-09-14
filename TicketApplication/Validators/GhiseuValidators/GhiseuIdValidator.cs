@@ -6,7 +6,7 @@ namespace TicketApplication.Validators.GhiseuValidators
     {
         public GhiseuIdValidator()
         {
-            RuleFor(id => id).GreaterThan(0).WithMessage("Ghiseu ID must be greater than 0.");
+            RuleFor(id => id).GreaterThan(0).WithMessage("ID-ul ghiseului trebuie sa fie mai mare ca 0.");
         }
     }
 }

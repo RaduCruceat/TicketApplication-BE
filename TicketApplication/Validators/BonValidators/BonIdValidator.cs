@@ -6,7 +6,7 @@ namespace TicketApplication.Validators.BonValidators
     {
         public BonIdValidator()
         {
-            RuleFor(id => id).GreaterThan(0).WithMessage("Bon ID must be greater than 0.");
+            RuleFor(id => id).GreaterThan(0).WithMessage("ID-ul bonului trebuie sa fie mai mare ca 0.");
         }
     }
 }

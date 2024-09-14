@@ -9,7 +9,7 @@ namespace TicketApplication.Validators.BonValidators
         public AddBonValidator()
         {
             RuleFor(b => b.IdGhiseu).SetValidator(new GhiseuIdValidator());
-            RuleFor(b => b.Stare).IsInEnum().WithMessage("Invalid value for Stare.");
+            RuleFor(b => b.Stare).IsInEnum().WithMessage("Starea trebuie sa aiba valoarea 0,1 sau 2.");
         }
     }
 }

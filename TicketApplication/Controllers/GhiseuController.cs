@@ -15,6 +15,7 @@ public class GhiseuController : ControllerBase
     {
         _ghiseuService = ghiseuService;
     }
+
     [HttpGet("GetIcons", Name = "GetAllIcons")]
     public ActionResult<ResponseValidator<IEnumerable<string?>>> GetIcons()
     {
@@ -27,16 +28,15 @@ public class GhiseuController : ControllerBase
 
             if (!icons.Any())
             {
-                return NotFound(ResponseValidator<IEnumerable<string?>>.Failure("No icons found."));
+                return NotFound(ResponseValidator<IEnumerable<string?>>.Failure("Nu au fost găsite pictograme."));
             }
             return Ok(ResponseValidator<IEnumerable<string?>>.Success(icons));
         }
         catch (Exception e)
         {
-            return StatusCode(500, ResponseValidator<IEnumerable<string?>>.Failure($"An error occurred: {e.Message}"));
+            return StatusCode(500, ResponseValidator<IEnumerable<string?>>.Failure($"A apărut o eroare: {e.Message}"));
         }
     }
-
 
     [HttpGet("GetAll", Name = "GetAllGhiseu")]
     public async Task<ActionResult<ResponseValidator<IEnumerable<GhiseuDtoID>>>> GetAllGhiseu()
@@ -46,17 +46,17 @@ public class GhiseuController : ControllerBase
             var ghiseuList = await _ghiseuService.GetAllGhiseu();
             if (ghiseuList == null)
             {
-                return NotFound(ResponseValidator<GhiseuDtoID>.Failure($"Ghiseu list is empty"));
+                return NotFound(ResponseValidator<GhiseuDtoID>.Failure($"Lista de ghișee este goală."));
             }
             return Ok(ResponseValidator<IEnumerable<GhiseuDtoID>>.Success(ghiseuList));
         }
         catch (ValidationException e)
         {
-            return BadRequest(ResponseValidator<IEnumerable<GhiseuDtoID>>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
+            return BadRequest(ResponseValidator<IEnumerable<GhiseuDtoID>>.Failure("A apărut o eroare de validare: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (Exception e)
         {
-            return StatusCode(500, ResponseValidator<IEnumerable<GhiseuDtoID>>.Failure($"An error occurred: {e.Message}"));
+            return StatusCode(500, ResponseValidator<IEnumerable<GhiseuDtoID>>.Failure($"A apărut o eroare: {e.Message}"));
         }
     }
 
@@ -68,13 +68,13 @@ public class GhiseuController : ControllerBase
             var ghiseu = await _ghiseuService.GetGhiseuById(id);
             if (ghiseu == null)
             {
-                return NotFound(ResponseValidator<GhiseuDto>.Failure($"Ghiseu with ID {id} not found."));
+                return NotFound(ResponseValidator<GhiseuDto>.Failure($"Ghișeul cu id-ul {id} nu a fost găsit."));
             }
             return Ok(ResponseValidator<GhiseuDto>.Success(ghiseu));
         }
         catch (ValidationException e)
         {
-            return BadRequest(ResponseValidator<GhiseuDto>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
+            return BadRequest(ResponseValidator<GhiseuDto>.Failure("A apărut o eroare de validare: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (KeyNotFoundException e)
         {
@@ -82,7 +82,7 @@ public class GhiseuController : ControllerBase
         }
         catch (Exception e)
         {
-            return StatusCode(500, ResponseValidator<GhiseuDto>.Failure($"An error occurred: {e.Message}"));
+            return StatusCode(500, ResponseValidator<GhiseuDto>.Failure($"A apărut o eroare: {e.Message}"));
         }
     }
 
@@ -96,11 +96,11 @@ public class GhiseuController : ControllerBase
         }
         catch (ValidationException e)
         {
-            return BadRequest(ResponseValidator<GhiseuDto>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
+            return BadRequest(ResponseValidator<GhiseuDto>.Failure("A apărut o eroare de validare: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (Exception e)
         {
-            return StatusCode(500, ResponseValidator<GhiseuDto>.Failure($"An error occurred: {e.Message}"));
+            return StatusCode(500, ResponseValidator<GhiseuDto>.Failure($"A apărut o eroare: {e.Message}"));
         }
     }
 
@@ -112,13 +112,13 @@ public class GhiseuController : ControllerBase
             var updatedGhiseu = await _ghiseuService.EditGhiseu(id, ghiseu);
             if (updatedGhiseu == null)
             {
-                return NotFound(ResponseValidator<EditGhiseuDto>.Failure($"Ghiseu with ID {id} not found."));
+                return NotFound(ResponseValidator<EditGhiseuDto>.Failure($"Ghișeul cu id-ul {id} nu a fost găsit."));
             }
             return Ok(ResponseValidator<EditGhiseuDto>.Success(updatedGhiseu));
         }
         catch (ValidationException e)
         {
-            return BadRequest(ResponseValidator<EditGhiseuDto>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
+            return BadRequest(ResponseValidator<EditGhiseuDto>.Failure("A apărut o eroare de validare: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (KeyNotFoundException e)
         {
@@ -126,7 +126,7 @@ public class GhiseuController : ControllerBase
         }
         catch (Exception e)
         {
-            return StatusCode(500, ResponseValidator<EditGhiseuDto>.Failure($"An error occurred: {e.Message}"));
+            return StatusCode(500, ResponseValidator<EditGhiseuDto>.Failure($"A apărut o eroare: {e.Message}"));
         }
     }
 
@@ -138,13 +138,13 @@ public class GhiseuController : ControllerBase
             var updatedGhiseu = await _ghiseuService.MarkAsActive(id);
             if (updatedGhiseu == null)
             {
-                return NotFound(ResponseValidator<GhiseuDto>.Failure($"Ghiseu with ID {id} not found."));
+                return NotFound(ResponseValidator<GhiseuDto>.Failure($"Ghișeul cu id-ul {id} nu a fost găsit."));
             }
             return Ok(ResponseValidator<GhiseuDto>.Success(updatedGhiseu));
         }
         catch (ValidationException e)
         {
-            return BadRequest(ResponseValidator<GhiseuDto>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
+            return BadRequest(ResponseValidator<GhiseuDto>.Failure("A apărut o eroare de validare: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (KeyNotFoundException e)
         {
@@ -152,7 +152,7 @@ public class GhiseuController : ControllerBase
         }
         catch (Exception e)
         {
-            return StatusCode(500, ResponseValidator<GhiseuDto>.Failure($"An error occurred: {e.Message}"));
+            return StatusCode(500, ResponseValidator<GhiseuDto>.Failure($"A apărut o eroare: {e.Message}"));
         }
     }
 
@@ -164,13 +164,13 @@ public class GhiseuController : ControllerBase
             var updatedGhiseu = await _ghiseuService.MarkAsInactive(id);
             if (updatedGhiseu == null)
             {
-                return NotFound(ResponseValidator<GhiseuDto>.Failure($"Ghiseu with ID {id} not found."));
+                return NotFound(ResponseValidator<GhiseuDto>.Failure($"Ghișeul cu id-ul {id} nu a fost găsit."));
             }
             return Ok(ResponseValidator<GhiseuDto>.Success(updatedGhiseu));
         }
         catch (ValidationException e)
         {
-            return BadRequest(ResponseValidator<GhiseuDto>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
+            return BadRequest(ResponseValidator<GhiseuDto>.Failure("A apărut o eroare de validare: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (KeyNotFoundException e)
         {
@@ -178,7 +178,7 @@ public class GhiseuController : ControllerBase
         }
         catch (Exception e)
         {
-            return StatusCode(500, ResponseValidator<GhiseuDto>.Failure($"An error occurred: {e.Message}"));
+            return StatusCode(500, ResponseValidator<GhiseuDto>.Failure($"A apărut o eroare: {e.Message}"));
         }
     }
 
@@ -190,13 +190,13 @@ public class GhiseuController : ControllerBase
             var deletedGhiseu = await _ghiseuService.DeleteGhiseu(id);
             if (deletedGhiseu == null)
             {
-                return NotFound(ResponseValidator<GhiseuDto>.Failure($"Ghiseu with ID {id} not found."));
+                return NotFound(ResponseValidator<GhiseuDto>.Failure($"Ghișeul cu id-ul {id} nu a fost găsit."));
             }
             return Ok(ResponseValidator<GhiseuDto>.Success(deletedGhiseu));
         }
         catch (ValidationException e)
         {
-            return BadRequest(ResponseValidator<GhiseuDto>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
+            return BadRequest(ResponseValidator<GhiseuDto>.Failure("A apărut o eroare de validare: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (KeyNotFoundException e)
         {
@@ -204,7 +204,7 @@ public class GhiseuController : ControllerBase
         }
         catch (Exception e)
         {
-            return StatusCode(500, ResponseValidator<GhiseuDto>.Failure($"An error occurred: {e.Message}"));
+            return StatusCode(500, ResponseValidator<GhiseuDto>.Failure($"A apărut o eroare: {e.Message}"));
         }
     }
 }

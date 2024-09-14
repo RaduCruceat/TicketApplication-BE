@@ -24,17 +24,17 @@ public class BonController : ControllerBase
             var bonList = await _bonService.GetAllBon();
             if (bonList == null)
             {
-                return NotFound(ResponseValidator<BonDtoID>.Failure($"Bon list is empty."));
+                return NotFound(ResponseValidator<BonDtoID>.Failure("Lista de bonuri este goală."));
             }
             return Ok(ResponseValidator<IEnumerable<BonDtoID>>.Success(bonList));
         }
         catch (ValidationException e)
         {
-            return BadRequest(ResponseValidator<IEnumerable<BonDtoID>>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
+            return BadRequest(ResponseValidator<IEnumerable<BonDtoID>>.Failure("A apărut o eroare de validare: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (Exception e)
         {
-            return StatusCode(500, ResponseValidator<IEnumerable<BonDtoID>>.Failure($"An error occurred: {e.Message}"));
+            return StatusCode(500, ResponseValidator<IEnumerable<BonDtoID>>.Failure($"A apărut o eroare: {e.Message}"));
         }
     }
 
@@ -46,13 +46,13 @@ public class BonController : ControllerBase
             var bon = await _bonService.GetBonById(id);
             if (bon == null)
             {
-                return NotFound(ResponseValidator<BonDto>.Failure($"Bon with ID {id} not found."));
+                return NotFound(ResponseValidator<BonDto>.Failure($"Bonul cu ID-ul {id} nu a fost găsit."));
             }
             return Ok(ResponseValidator<BonDto>.Success(bon));
         }
         catch (ValidationException e)
         {
-            return BadRequest(ResponseValidator<BonDto>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
+            return BadRequest(ResponseValidator<BonDto>.Failure("A apărut o eroare de validare: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (KeyNotFoundException e)
         {
@@ -60,7 +60,7 @@ public class BonController : ControllerBase
         }
         catch (Exception e)
         {
-            return StatusCode(500, ResponseValidator<BonDto>.Failure($"An error occurred: {e.Message}"));
+            return StatusCode(500, ResponseValidator<BonDto>.Failure($"A apărut o eroare: {e.Message}"));
         }
     }
 
@@ -72,17 +72,17 @@ public class BonController : ControllerBase
             var bons = await _bonService.GetAllBonByGhiseuId(ghiseuId);
             if (bons == null || !bons.Any())
             {
-                return NotFound(ResponseValidator<BonDtoID>.Failure($"Bons with IdGhiseu: {ghiseuId} not found."));
+                return NotFound(ResponseValidator<BonDtoID>.Failure($"Bonurile din ghiseul cu id-ul {ghiseuId} nu au fost găsite."));
             }
             return Ok(ResponseValidator<IEnumerable<BonDtoID>>.Success(bons));
         }
         catch (ValidationException e)
         {
-            return BadRequest(ResponseValidator<IEnumerable<BonDtoID>>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
+            return BadRequest(ResponseValidator<IEnumerable<BonDtoID>>.Failure("A apărut o eroare de validare: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (Exception e)
         {
-            return StatusCode(500, ResponseValidator<IEnumerable<BonDtoID>>.Failure($"An error occurred: {e.Message}"));
+            return StatusCode(500, ResponseValidator<IEnumerable<BonDtoID>>.Failure($"A apărut o eroare: {e.Message}"));
         }
     }
 
@@ -96,11 +96,11 @@ public class BonController : ControllerBase
         }
         catch (ValidationException e)
         {
-            return BadRequest(ResponseValidator<BonDto>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
+            return BadRequest(ResponseValidator<BonDto>.Failure("A apărut o eroare de validare: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (Exception e)
         {
-            return StatusCode(500, ResponseValidator<BonDto>.Failure($"An error occurred: {e.Message}"));
+            return StatusCode(500, ResponseValidator<BonDto>.Failure($"A apărut o eroare: {e.Message}"));
         }
     }
 
@@ -112,13 +112,13 @@ public class BonController : ControllerBase
             var updatedBon = await _bonService.MarkAsInProgress(id);
             if (updatedBon == null)
             {
-                return NotFound(ResponseValidator<BonDto>.Failure($"Bon with ID {id} not found."));
+                return NotFound(ResponseValidator<BonDto>.Failure($"Bonul cu ID-ul {id} nu a fost găsit."));
             }
             return Ok(ResponseValidator<BonDto>.Success(updatedBon));
         }
         catch (ValidationException e)
         {
-            return BadRequest(ResponseValidator<BonDto>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
+            return BadRequest(ResponseValidator<BonDto>.Failure("A apărut o eroare de validare: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (KeyNotFoundException e)
         {
@@ -126,7 +126,7 @@ public class BonController : ControllerBase
         }
         catch (Exception e)
         {
-            return StatusCode(500, ResponseValidator<BonDto>.Failure($"An error occurred: {e.Message}"));
+            return StatusCode(500, ResponseValidator<BonDto>.Failure($"A apărut o eroare: {e.Message}"));
         }
     }
 
@@ -138,13 +138,13 @@ public class BonController : ControllerBase
             var updatedBon = await _bonService.MarkAsReceived(id);
             if (updatedBon == null)
             {
-                return NotFound(ResponseValidator<BonDto>.Failure($"Bon with ID {id} not found."));
+                return NotFound(ResponseValidator<BonDto>.Failure($"Bonul cu ID-ul {id} nu a fost găsit."));
             }
             return Ok(ResponseValidator<BonDto>.Success(updatedBon));
         }
         catch (ValidationException e)
         {
-            return BadRequest(ResponseValidator<BonDto>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
+            return BadRequest(ResponseValidator<BonDto>.Failure("A apărut o eroare de validare: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (KeyNotFoundException e)
         {
@@ -152,7 +152,7 @@ public class BonController : ControllerBase
         }
         catch (Exception e)
         {
-            return StatusCode(500, ResponseValidator<BonDto>.Failure($"An error occurred: {e.Message}"));
+            return StatusCode(500, ResponseValidator<BonDto>.Failure($"A apărut o eroare: {e.Message}"));
         }
     }
 
@@ -164,13 +164,13 @@ public class BonController : ControllerBase
             var updatedBon = await _bonService.MarkAsClosed(id);
             if (updatedBon == null)
             {
-                return NotFound(ResponseValidator<BonDto>.Failure($"Bon with ID {id} not found."));
+                return NotFound(ResponseValidator<BonDto>.Failure($"Bonul cu ID-ul {id} nu a fost găsit."));
             }
             return Ok(ResponseValidator<BonDto>.Success(updatedBon));
         }
         catch (ValidationException e)
         {
-            return BadRequest(ResponseValidator<BonDto>.Failure("Validation error occurred: " + e.Errors.FirstOrDefault()?.ErrorMessage));
+            return BadRequest(ResponseValidator<BonDto>.Failure("A apărut o eroare de validare: " + e.Errors.FirstOrDefault()?.ErrorMessage));
         }
         catch (KeyNotFoundException e)
         {
@@ -178,7 +178,7 @@ public class BonController : ControllerBase
         }
         catch (Exception e)
         {
-            return StatusCode(500, ResponseValidator<BonDto>.Failure($"An error occurred: {e.Message}"));
+            return StatusCode(500, ResponseValidator<BonDto>.Failure($"A apărut o eroare: {e.Message}"));
         }
     }
 }

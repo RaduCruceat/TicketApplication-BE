@@ -7,7 +7,7 @@ namespace TicketApplication.Validators.GhiseuValidators
     {
         public ActiveGhiseuValidator()
         {
-            RuleFor(dto => dto.Activ).NotNull().WithMessage("The Activ status must be specified.");
+            RuleFor(dto => dto.Activ).NotNull().WithMessage("Ghiseul trebuie sa fie activ sau inactiv.");
         }
     }
 }
