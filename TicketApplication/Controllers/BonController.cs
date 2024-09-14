@@ -24,7 +24,7 @@ public class BonController : ControllerBase
             var bonList = await _bonService.GetAllBon();
             if (bonList == null)
             {
-                return NotFound(ResponseValidator<BonDtoID>.Failure("Lista de bonuri este goală."));
+                return NotFound(ResponseValidator<BonDtoID>.Failure("Lista de bonuri este goală sau toate ghiseele sunt inchise."));
             }
             return Ok(ResponseValidator<IEnumerable<BonDtoID>>.Success(bonList));
         }
@@ -72,7 +72,7 @@ public class BonController : ControllerBase
             var bons = await _bonService.GetAllBonByGhiseuId(ghiseuId);
             if (bons == null || !bons.Any())
             {
-                return NotFound(ResponseValidator<BonDtoID>.Failure($"Bonurile din ghiseul cu id-ul {ghiseuId} nu au fost găsite."));
+                return NotFound(ResponseValidator<BonDtoID>.Failure($"Ghiseul cu id-ul {ghiseuId} este inactiv sau nu contine bonuri."));
             }
             return Ok(ResponseValidator<IEnumerable<BonDtoID>>.Success(bons));
         }
