@@ -5,6 +5,17 @@ This is the **C# ASP.NET Core** backend for the **Ticket Management System**. Th
 ### Frontend Application
 The project connects to a frontend Application built in **Svelte** using **TypeScript** (available in [this](https://github.com/RaduCruceat/TicketApplication-FE) repository).
 
+## Tech Stack
+
+- **ASP.NET Core**: For building the web API.
+- **SQL Server**: Database for persisting data, managed through **SQL Server Management Studio**.
+- **Entity Framework Core (EF Core)**: For database context management.
+- **FluentMigrator**: For handling database migrations.
+- **Dapper**: Lightweight ORM for executing raw SQL queries.
+- **AutoMapper**: For mapping between entities and DTOs.
+- **FluentValidation**: For validating DTOs.
+
+
 ## Features
 
 ### Counter Management
@@ -20,14 +31,5 @@ The project connects to a frontend Application built in **Svelte** using **TypeS
 - **Change Ticket Status:** Allows tickets to transition between `Received`, `In Progress`, and `Closed`.
 - **Timestamp Management:** Automatically records the creation and last edited time of each ticket.
 
-## Tech Stack
-
-- **ASP.NET Core**: For building the web API.
-- **SQL Server**: Database for persisting data, managed through **SQL Server Management Studio**.
-- **Entity Framework Core (EF Core)**: For database context management.
-- **FluentMigrator**: For handling database migrations.
-- **Dapper**: Lightweight ORM for executing raw SQL queries.
-- **AutoMapper**: For mapping between entities and DTOs.
-- **FluentValidation**: For validating DTOs.
 
 
