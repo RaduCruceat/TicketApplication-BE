@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
 using TicketApplication.Data.Entities;
 
 namespace TicketApplication.Data.Context
@@ -28,29 +26,64 @@ namespace TicketApplication.Data.Context
             modelBuilder.Entity<Ghiseu>(entity =>
             {
                 entity.ToTable("Ghiseu", "bon");
+
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.Id).UseIdentityColumn();
-                entity.Property(e => e.Cod).IsRequired();
-                entity.Property(e => e.Denumire).IsRequired();
-                entity.Property(e => e.Descriere);
-                entity.Property(e => e.Icon);
-                entity.Property(e => e.Activ);
+                entity.Property(e => e.Id)
+                    .UseIdentityColumn();
+
+                entity.Property(e => e.Cod)
+                    .IsRequired()
+                    .HasMaxLength(50); // Add appropriate max length
+
+                entity.Property(e => e.Denumire)
+                    .IsRequired()
+                    .HasMaxLength(100); // Add appropriate max length
+
+                entity.Property(e => e.Descriere)
+                    .HasMaxLength(500); // Add appropriate max length
+
+                entity.Property(e => e.Icon)
+                    .HasMaxLength(100); // Add appropriate max length
+
+                entity.Property(e => e.Activ)
+                  .IsRequired()
+                  .HasConversion<bool>();
+
+                // Configure the relationship with Bon
+                entity.HasMany(g => g.Bonuri)
+                    .WithOne(b => b.Ghiseu)
+                    .HasForeignKey(b => b.IdGhiseu)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Bon>(entity =>
             {
                 entity.ToTable("Bon", "bon");
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Id).UseIdentityColumn();
-                entity.Property(e => e.IdGhiseu);
-                entity.Property(e => e.Stare).HasConversion<int>();
-                entity.Property(e => e.Stare);
-                entity.Property(e => e.CreatedAt);
-                entity.Property(e => e.ModifiedAt);
 
-                entity.HasOne(d => d.Ghiseu)
-                    .WithMany(p => p.Bonuri)
-                    .HasForeignKey(d => d.IdGhiseu);
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id)
+                    .UseIdentityColumn();
+
+                entity.Property(e => e.IdGhiseu)
+                    .IsRequired();
+
+                entity.Property(e => e.Stare)
+                    .HasConversion<int>()
+                    .IsRequired();
+
+                entity.Property(e => e.CreatedAt)
+                    .HasDefaultValueSql("GETDATE()")
+                    .IsRequired();
+
+                entity.Property(e => e.ModifiedAt)
+                    .HasDefaultValueSql("GETDATE()")
+                    .IsRequired();
+
+                // Configure the relationship with Ghiseu
+                entity.HasOne(b => b.Ghiseu)
+                    .WithMany(g => g.Bonuri)
+                    .HasForeignKey(b => b.IdGhiseu)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             base.OnModelCreating(modelBuilder);
