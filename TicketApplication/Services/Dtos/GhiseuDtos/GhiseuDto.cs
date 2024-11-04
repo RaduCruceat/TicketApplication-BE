@@ -6,5 +6,5 @@ public class GhiseuDto
     public required string Denumire { get; set; }
     public required string Descriere { get; set; }
     public required string Icon { get; set; }
-    public bool Activ { get; set; }
+    public bool Activ { get; set; } = true;
 }

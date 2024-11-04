@@ -1,10 +1,11 @@
 using TicketApplication.Data.Context;
-using TicketApplication.Data.Repositories;
+//using TicketApplication.Data.Repositories;
 using TicketApplication.Services;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using TicketApplication.Validators.GhiseuValidators;
 using TicketApplication.Validators.BonValidators;
+using TicketApplication.Data.EFRepositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,7 @@ builder.Services.AddScoped<IGhiseuService, GhiseuService>();
 builder.Services.AddScoped<IBonService, BonService>();
 
 
+
 builder.Services.AddFluentValidationAutoValidation();
 //builder.Services.AddValidatorsFromAssemblyContaining<CreateGhiseuValidator>();
 
@@ -42,18 +44,23 @@ if (string.IsNullOrEmpty(connectionString))
 MigrationCode.RunMigrations(connectionString);
 
 // Register repositories
-builder.Services.AddScoped<IGhiseuRepository>(sp =>
-{
-    return new GhiseuRepository(connectionString);
-});
-builder.Services.AddScoped<IBonRepository>(sp =>
-{
-    return new BonRepository(connectionString);
-});
+//builder.Services.AddScoped<IGhiseuRepository>(sp =>
+//{
+//    return new GhiseuRepository(connectionString);
+//});
+//builder.Services.AddScoped<IBonRepository>(sp =>
+//{
+//    return new BonRepository(connectionString);
+//});
+
+
 
 // Register DbContext
 builder.Services.AddDbContext<BonContext>(options =>
     options.UseSqlServer(connectionString));
+
+builder.Services.AddScoped<IGhiseuRepositoryEF, GhiseuRepositoryEF>();
+builder.Services.AddScoped<IBonRepositoryEF, BonRepositoryEF>();
 
 // Register validators
 builder.Services.AddScoped<GhiseuIdValidator>();

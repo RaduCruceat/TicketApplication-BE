@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using TicketApplication.Data.Entities;
-using TicketApplication.Data.Repositories;
+using TicketApplication.Data.EFRepositories;
 using TicketApplication.Services.Dtos.BonDtos;
 using TicketApplication.Services.Dtos.GhiseuDtos;
 using TicketApplication.Validators.GhiseuValidators;
@@ -9,14 +9,14 @@ namespace TicketApplication.Services
 {
     public class GhiseuService : IGhiseuService
     {
-        private readonly IGhiseuRepository _ghiseuRepository;
+        private readonly IGhiseuRepositoryEF _ghiseuRepository;
         private readonly GhiseuIdValidator _ghiseuIdValidator;
         private readonly AddGhiseuValidator _addGhiseuValidator;
         private readonly EditGhiseuValidator _editGhiseuValidator;
         private readonly DeleteGhiseuValidator _deleteGhiseuValidator;
         private readonly ActiveGhiseuValidator _activeGhiseuValidator;
 
-        public GhiseuService(IGhiseuRepository ghiseuRepository, GhiseuIdValidator ghiseuIdValidator, AddGhiseuValidator addGhiseuValidator, EditGhiseuValidator editGhiseuValidator, DeleteGhiseuValidator deleteGhiseuValidator, ActiveGhiseuValidator activeGhiseuValidator)
+        public GhiseuService(IGhiseuRepositoryEF ghiseuRepository, GhiseuIdValidator ghiseuIdValidator, AddGhiseuValidator addGhiseuValidator, EditGhiseuValidator editGhiseuValidator, DeleteGhiseuValidator deleteGhiseuValidator, ActiveGhiseuValidator activeGhiseuValidator)
         {
             _ghiseuRepository = ghiseuRepository;
             _ghiseuIdValidator = ghiseuIdValidator;
